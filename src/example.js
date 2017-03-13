@@ -1,5 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Video from './index';
+import { ControlBar, Player } from './index';
 
-ReactDOM.render(<Video src="./small.mp4" nativeControls/>, document.getElementById('wrapper'));
+const Video = () => (
+  <Player src="./small.mp4" nativeControls>
+    <ControlBar />
+  </Player>
+);
+
+ReactDOM.render(<Video />, document.getElementById('wrapper'));

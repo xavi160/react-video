@@ -1,10 +1,7 @@
 import React from 'react';
-import Tick from './Tick';
-import ControlBar from './ControlBar';
 import stateReducer, { PLAY, PAUSE, SEEKING, SEEKED } from '../state';
 
 export default class Player extends React.Component {
-
   constructor(props) {
     super(props);
     this.state = stateReducer({
@@ -17,46 +14,41 @@ export default class Player extends React.Component {
     this.onSeeked = this.onEvent.bind(this, SEEKED);
   }
 
-  onEvent(type, event) {
-    event.persist();
-    this.setState((state) => stateReducer(state, {
-      type,
-      currentTime: event.target.currentTime
-    }));
+  getChildContext() {
+    return { playerState: this.state };
   }
 
-  getCurrentTime() {
-    if (this.state.playing) {
-      const now = new Date();
-      const { currentTime = 0, lastChange = now } = this.state;
-      return (now.getTime() - lastChange.getTime()) / 1000.0 + currentTime;
-    }
-    return this.state.currentTime;
+  onEvent(type, event) {
+    event.persist();
+    this.setState((state) =>
+      stateReducer(state, {
+        type,
+        currentTime: event.target.currentTime
+      }));
   }
 
   render() {
-    const { nativeControls, ...realProps } = this.props;
+    const { children, nativeControls, ...realProps } = this.props;
     return (
       <div>
-        <Tick milliseconds={200}>
-          {() => (
-            <ControlBar>
-              The current time is {Math.floor(this.getCurrentTime())}
-            </ControlBar>
-          )}
-        </Tick>
-        <video {...realProps}
+        {children}
+        <video
+          {...realProps}
           controls={nativeControls}
           onPlay={this.onPlay}
           onPause={this.onPause}
           onSeeking={this.onSeeking}
-          onSeeked={this.onSeeked} />
+          onSeeked={this.onSeeked}
+        />
       </div>
     );
   }
 }
 
 Player.propTypes = {
+  children: React.PropTypes.node,
   starttime: React.PropTypes.number,
   nativeControls: React.PropTypes.bool
 };
+
+Player.childContextTypes = { playerState: React.PropTypes.object.isRequired };

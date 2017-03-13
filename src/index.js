@@ -1,2 +1,5 @@
-import Player from './components/Player';
-export default Player;
+import ab from './components/ControlBar';
+import ba from './components/Player';
+
+export const ControlBar = ab;
+export const Player = ba;
