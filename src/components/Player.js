@@ -1,5 +1,6 @@
 import React from 'react';
 import stateReducer, { PLAY, PAUSE, SEEKING, SEEKED } from '../state';
+import ControlledPlayer from './ControlledPlayer';
 
 export default class Player extends React.Component {
   constructor(props) {
@@ -28,19 +29,15 @@ export default class Player extends React.Component {
   }
 
   render() {
-    const { children, nativeControls, ...realProps } = this.props;
     return (
-      <div>
-        {children}
-        <video
-          {...realProps}
-          controls={nativeControls}
-          onPlay={this.onPlay}
-          onPause={this.onPause}
-          onSeeking={this.onSeeking}
-          onSeeked={this.onSeeked}
-        />
-      </div>
+      <ControlledPlayer
+        {...this.props}
+        playerState={this.state}
+        onPlay={this.onPlay}
+        onPause={this.onPause}
+        onSeeking={this.onSeeking}
+        onSeeked={this.onSeeked}
+      />
     );
   }
 }

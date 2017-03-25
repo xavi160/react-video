@@ -24,7 +24,7 @@ const ClockWithTick = withTick(
 
 const ControlBar = ({ playerState, ...props }) => (
   <ControlBarWrapper {...props}>
-    The current time is <ClockWithTick {...playerState} />
+    <ClockWithTick {...playerState} />
   </ControlBarWrapper>
 );
 
