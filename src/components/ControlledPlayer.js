@@ -1,13 +1,17 @@
 import React from 'react';
+import VideoSource from './VideoSource';
 
 export default class Player extends React.Component {
-
   render() {
     const { children, nativeControls, playerState, ...realProps } = this.props;
     return (
       <div>
         {children}
-        <video {...realProps} controls={nativeControls} />
+        <VideoSource
+          {...realProps}
+          playerState={playerState}
+          controls={nativeControls}
+        />
       </div>
     );
   }
