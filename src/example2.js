@@ -1,24 +1,25 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import HTML5Video from './components/ControlledHTML5Video';
+import ControlledVideo from './components/ControlledVideo';
 import SeekBar from './components/SeekBar';
 import Clock from './components/Clock';
 import withTick from './hoc/withTick';
+import HTML5 from './techs/html5';
 
 const UpdateableBar = withTick(
   200,
-  ({ facade }) => true || !facade.paused,
-  ({ facade }) => (
+  ({ tech }) => true || !tech.paused,
+  ({ tech }) => (
     <div>
       <div>
-        <Clock seconds={facade.currentTime} />
+        <Clock seconds={tech.currentTime} />
       </div>
       <div>
         <SeekBar
-          currentTime={facade.currentTime}
-          duration={facade.duration}
+          currentTime={tech.currentTime}
+          duration={tech.duration}
           onSeek={(time) => {
-            facade.currentTime = time;
+            tech.currentTime = time;
           }}
         />
       </div>
@@ -29,7 +30,7 @@ const UpdateableBar = withTick(
 class Video extends React.Component {
   constructor() {
     super();
-    this.facades = [];
+    this.techs = [];
     this.state = {
       paused: true,
       currentTime: 0
@@ -37,7 +38,7 @@ class Video extends React.Component {
   }
 
   getChildContext() {
-    return { facades: this.facades };
+    return { techs: this.techs };
   }
 
   togglePlaying() {
@@ -59,7 +60,7 @@ class Video extends React.Component {
   }
 
   render() {
-    const [facade] = this.facades;
+    const [tech] = this.techs;
     return (
       <div>
         <div>
@@ -68,18 +69,18 @@ class Video extends React.Component {
             placeholder="Current time"
             onChange={this.onTimeChange.bind(this)}
           />
-          {facade && <UpdateableBar facade={facade} />}
+          {tech && <UpdateableBar tech={tech} />}
         </div>
-        <HTML5Video
+        <ControlledVideo
+          {...this.state}
+          tech={HTML5}
           src="./small.mp4"
-          paused={this.state.paused}
-          currentTime={this.state.currentTime}
         />
       </div>
     );
   }
 }
 
-Video.childContextTypes = { facades: React.PropTypes.array.isRequired };
+Video.childContextTypes = { techs: React.PropTypes.array.isRequired };
 
 ReactDOM.render(<Video />, document.getElementById('wrapper'));

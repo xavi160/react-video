@@ -1,4 +1,4 @@
-export default class HTML5VideoFacade {
+export default class HTML5VideoTech {
   constructor(el) {
     this.el = el;
   }

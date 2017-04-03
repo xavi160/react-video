@@ -1,21 +1,20 @@
 import React from 'react';
-import HTML5VideoFacade from '../facades/html5';
 
-export default class ControlledHTML5Video extends React.Component {
+export default class ControlledVideo extends React.Component {
   constructor(props, context) {
     super(props, context);
-    this.createFacade = this.createFacade.bind(this);
+    this.createTech = this.createTech.bind(this);
   }
 
   componentDidMount() {
-    this.syncFacade();
+    this.syncTech();
   }
 
   componentDidUpdate(previousProps) {
-    this.syncFacade(previousProps);
+    this.syncTech(previousProps);
   }
 
-  syncFacade(previousProps = {}) {
+  syncTech(previousProps = {}) {
     const { currentTime, paused, src } = this.props;
     const { video } = this;
 
@@ -32,20 +31,21 @@ export default class ControlledHTML5Video extends React.Component {
     }
   }
 
-  createFacade(ref) {
-    this.video = new HTML5VideoFacade(ref);
-    this.context.facades.push(this.video);
+  createTech(ref) {
+    this.video = new this.props.tech(ref);
+    this.context.techs.push(this.video);
   }
 
   render() {
-    return <video controls ref={this.createFacade} />;
+    return <video controls ref={this.createTech} />;
   }
 }
 
-ControlledHTML5Video.propTypes = {
+ControlledVideo.propTypes = {
   src: React.PropTypes.string,
   currentTime: React.PropTypes.number,
+  tech: React.PropTypes.func.isRequired,
   paused: React.PropTypes.bool.isRequired
 };
 
-ControlledHTML5Video.contextTypes = { facades: React.PropTypes.array };
+ControlledVideo.contextTypes = { techs: React.PropTypes.array };
