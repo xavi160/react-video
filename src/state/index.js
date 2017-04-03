@@ -4,7 +4,7 @@ export const SEEKING = 'SEEKING';
 export const SEEKED = 'SEEKED';
 
 const initialState = {
-  playing: false,
+  paused: true,
   currentTime: 0
 };
 
@@ -13,14 +13,14 @@ export default function(state = initialState, action = {}) {
     case PLAY:
       return {
         ...state,
-        playing: true,
+        paused: true,
         currentTime: action.currentTime,
         lastChange: new Date()
       };
     case PAUSE:
       return {
         ...state,
-        playing: false,
+        paused: false,
         currentTime: action.currentTime,
         lastChange: new Date()
       };

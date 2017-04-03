@@ -15,7 +15,7 @@ const ControlBarWrapper = styled.div`
 
 const ClockWithTick = withTick(
   200,
-  (props) => props.playing,
+  (props) => !props.paused,
   ({ now, currentTime, lastChange = now }) => {
     const seconds = currentTime + (now.getTime() - lastChange.getTime()) / 1000.0;
     return <Clock seconds={Math.max(0, seconds)} />;

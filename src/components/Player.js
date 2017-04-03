@@ -6,7 +6,7 @@ export default class Player extends React.Component {
   constructor(props) {
     super(props);
     this.state = stateReducer({
-      playing: false,
+      paused: true,
       currentTime: props.starttime || 0
     });
     this.onPlay = this.onEvent.bind(this, PLAY);
