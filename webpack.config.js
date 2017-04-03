@@ -1,9 +1,9 @@
 /* eslint-env node */
-var path = require('path');
+const path = require('path');
 
 module.exports = {
 
-  entry: ['./src/example.js'],
+  entry: ['./src/example2.js'],
 
   output: {
     path: path.resolve(__dirname, 'public/'),
