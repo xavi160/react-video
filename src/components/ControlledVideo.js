@@ -16,24 +16,24 @@ export default class ControlledVideo extends React.Component {
 
   syncTech(previousProps = {}) {
     const { currentTime, paused, src } = this.props;
-    const { video } = this;
+    const { tech } = this;
 
     if (previousProps.src !== src) {
-      video.source = src;
+      tech.source = src;
     }
 
     if (previousProps.paused !== paused) {
-      video.paused = paused;
+      tech.paused = paused;
     }
 
     if (previousProps.currentTime !== currentTime) {
-      video.currentTime = currentTime || 0;
+      tech.currentTime = currentTime || 0;
     }
   }
 
   createTech(ref) {
-    this.video = new this.props.tech(ref);
-    this.context.techs.push(this.video);
+    this.tech = new this.props.tech(ref);
+    this.context.setTech(this.tech);
   }
 
   render() {
@@ -48,4 +48,4 @@ ControlledVideo.propTypes = {
   paused: React.PropTypes.bool.isRequired
 };
 
-ControlledVideo.contextTypes = { techs: React.PropTypes.array };
+ControlledVideo.contextTypes = { setTech: React.PropTypes.func.isRequired };

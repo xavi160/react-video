@@ -1,24 +1,35 @@
 import React from 'react';
-import VideoSource from './VideoSource';
+import ControlledVideo from './ControlledVideo';
 
-export default class Player extends React.Component {
+export default class ControlledPlayer extends React.Component {
+
+  getChildContext() {
+    return {
+      setTech: (tech) => {
+        this.tech = tech;
+      }
+    };
+  }
+
   render() {
-    const { children, nativeControls, playerState, ...realProps } = this.props;
+    const activeTech = this.tech;
+    const { children, playerState, src, tech } = this.props;
     return (
       <div>
         {children}
-        <VideoSource
-          {...realProps}
-          playerState={playerState}
-          controls={nativeControls}
-        />
+        <ControlledVideo src={src} tech={tech} {...playerState} />
       </div>
     );
   }
 }
 
-Player.propTypes = {
+ControlledPlayer.propTypes = {
   children: React.PropTypes.node,
   playerState: React.PropTypes.object.isRequired,
+  onChange: React.PropTypes.object.isRequired,
+  src: React.PropTypes.string,
+  tech: React.PropTypes.func.isRequired,
   nativeControls: React.PropTypes.bool
 };
+
+ControlledPlayer.childContextTypes = { setTech: React.PropTypes.func.isRequired };

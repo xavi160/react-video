@@ -9,6 +9,7 @@ export default class Player extends React.Component {
       paused: true,
       currentTime: props.starttime || 0
     });
+    this.onChange = this.onChange.bind(this);
     this.onPlay = this.onEvent.bind(this, PLAY);
     this.onPause = this.onEvent.bind(this, PAUSE);
     this.onSeeking = this.onEvent.bind(this, SEEKING);
@@ -17,6 +18,10 @@ export default class Player extends React.Component {
 
   getChildContext() {
     return { playerState: this.state };
+  }
+
+  onChange(action) {
+    console.log(this, action);
   }
 
   onEvent(type, event) {
@@ -33,6 +38,7 @@ export default class Player extends React.Component {
       <ControlledPlayer
         {...this.props}
         playerState={this.state}
+        onChange={this.onChange}
         onPlay={this.onPlay}
         onPause={this.onPause}
         onSeeking={this.onSeeking}
