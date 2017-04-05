@@ -1,23 +1,42 @@
 import React from 'react';
-import ControlledVideo from './ControlledVideo';
+import HTML5VideoTech from './HTML5VideoTech';
 
 export default class ControlledPlayer extends React.Component {
 
+  constructor(props, context) {
+    super(props, context);
+    this.setTech = this.setTech.bind(this);
+    this.holder = {};
+  }
+
   getChildContext() {
-    return {
-      setTech: (tech) => {
-        this.tech = tech;
-      }
-    };
+    return this.holder;
+  }
+
+  selectTechComponent() {
+    return HTML5VideoTech;
+  }
+
+  setTech(ref) {
+    this.holder.tech = ref.tech;
   }
 
   render() {
-    const activeTech = this.tech;
-    const { children, playerState, src, tech } = this.props;
+    const { children, playerState, src } = this.props;
+    const Tech = this.selectTechComponent();
     return (
       <div>
         {children}
-        <ControlledVideo src={src} tech={tech} {...playerState} />
+        <Tech
+          src={src}
+          {...playerState}
+          ref={this.setTech}
+          onPlay={this.props.onPlay}
+          onPause={this.props.onPause}
+          onEnded={this.props.onEnded}
+          onTimeUpdate={this.props.onTimeUpdate}
+          onSeeked={this.props.onSeeked}
+        />
       </div>
     );
   }
@@ -26,10 +45,13 @@ export default class ControlledPlayer extends React.Component {
 ControlledPlayer.propTypes = {
   children: React.PropTypes.node,
   playerState: React.PropTypes.object.isRequired,
-  onChange: React.PropTypes.object.isRequired,
+  onChange: React.PropTypes.func.isRequired,
   src: React.PropTypes.string,
-  tech: React.PropTypes.func.isRequired,
-  nativeControls: React.PropTypes.bool
+  onPlay: React.PropTypes.func,
+  onPause: React.PropTypes.func,
+  onEnded: React.PropTypes.func,
+  onTimeUpdate: React.PropTypes.func,
+  onSeeked: React.PropTypes.func
 };
 
-ControlledPlayer.childContextTypes = { setTech: React.PropTypes.func.isRequired };
+ControlledPlayer.childContextTypes = { tech: React.PropTypes.object };

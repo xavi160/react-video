@@ -1,6 +1,7 @@
 import React from 'react';
+import HTML5Tech from '../techs/html5';
 
-export default class ControlledVideo extends React.Component {
+export default class HTML5VideoTech extends React.Component {
   constructor(props, context) {
     super(props, context);
     this.createTech = this.createTech.bind(this);
@@ -32,20 +33,33 @@ export default class ControlledVideo extends React.Component {
   }
 
   createTech(ref) {
-    this.tech = new this.props.tech(ref);
-    this.context.setTech(this.tech);
+    this.tech = new HTML5Tech(ref);
   }
 
   render() {
-    return <video controls ref={this.createTech} />;
+    return (
+      <video
+        controls
+        ref={this.createTech}
+        onPlay={this.props.onPlay}
+        onPause={this.props.onPause}
+        onEnded={this.props.onEnded}
+        onTimeUpdate={this.props.onTimeUpdate}
+        onSeeked={this.props.onSeeked}
+      />
+    );
   }
 }
 
-ControlledVideo.propTypes = {
+HTML5VideoTech.propTypes = {
   src: React.PropTypes.string,
   currentTime: React.PropTypes.number,
-  tech: React.PropTypes.func.isRequired,
-  paused: React.PropTypes.bool.isRequired
+  paused: React.PropTypes.bool,
+  volume: React.PropTypes.number,
+  muted: React.PropTypes.bool,
+  onPlay: React.PropTypes.func,
+  onPause: React.PropTypes.func,
+  onEnded: React.PropTypes.func,
+  onTimeUpdate: React.PropTypes.func,
+  onSeeked: React.PropTypes.func
 };
-
-ControlledVideo.contextTypes = { setTech: React.PropTypes.func.isRequired };

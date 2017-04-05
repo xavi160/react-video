@@ -43,6 +43,7 @@ export default class Player extends React.Component {
         onPause={this.onPause}
         onSeeking={this.onSeeking}
         onSeeked={this.onSeeked}
+        onEnded={this.onPause}
       />
     );
   }

@@ -13,14 +13,14 @@ export default function(state = initialState, action = {}) {
     case PLAY:
       return {
         ...state,
-        paused: true,
+        paused: false,
         currentTime: action.currentTime,
         lastChange: new Date()
       };
     case PAUSE:
       return {
         ...state,
-        paused: false,
+        paused: true,
         currentTime: action.currentTime,
         lastChange: new Date()
       };
