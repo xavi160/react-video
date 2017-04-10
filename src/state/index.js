@@ -2,10 +2,13 @@ export const PLAY = 'PLAY';
 export const PAUSE = 'PAUSE';
 export const SEEKING = 'SEEKING';
 export const SEEKED = 'SEEKED';
+export const VOLUME_CHANGED = 'VOLUME_CHANGED';
 
 const initialState = {
   paused: true,
-  currentTime: 0
+  currentTime: 0,
+  volume: 1,
+  muted: false
 };
 
 export default function(state = initialState, action = {}) {
@@ -30,6 +33,12 @@ export default function(state = initialState, action = {}) {
         ...state,
         currentTime: action.currentTime,
         lastChange: new Date()
+      };
+    case VOLUME_CHANGED:
+      return {
+        ...state,
+        volume: action.volume,
+        muted: action.muted
       };
     default:
       return initialState;

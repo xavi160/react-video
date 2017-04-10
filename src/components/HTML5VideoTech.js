@@ -16,15 +16,15 @@ export default class HTML5VideoTech extends React.Component {
   }
 
   syncTech(previousProps = {}) {
-    const { currentTime, paused, src } = this.props;
+    const { currentTime, muted, paused, src, volume } = this.props;
     const { tech } = this;
+
+    tech.paused = paused;
+    tech.volume = volume;
+    tech.muted = muted;
 
     if (previousProps.src !== src) {
       tech.source = src;
-    }
-
-    if (previousProps.paused !== paused) {
-      tech.paused = paused;
     }
 
     if (previousProps.currentTime !== currentTime) {
@@ -46,6 +46,7 @@ export default class HTML5VideoTech extends React.Component {
         onEnded={this.props.onEnded}
         onTimeUpdate={this.props.onTimeUpdate}
         onSeeked={this.props.onSeeked}
+        onVolumeChange={this.props.onVolumeChange}
       />
     );
   }
@@ -61,5 +62,6 @@ HTML5VideoTech.propTypes = {
   onPause: React.PropTypes.func,
   onEnded: React.PropTypes.func,
   onTimeUpdate: React.PropTypes.func,
-  onSeeked: React.PropTypes.func
+  onSeeked: React.PropTypes.func,
+  onVolumeChange: React.PropTypes.func
 };

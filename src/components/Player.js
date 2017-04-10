@@ -1,5 +1,5 @@
 import React from 'react';
-import stateReducer, { PLAY, PAUSE, SEEKING, SEEKED } from '../state';
+import stateReducer, { PLAY, PAUSE, SEEKING, SEEKED, VOLUME_CHANGED } from '../state';
 import ControlledPlayer from './ControlledPlayer';
 
 export default class Player extends React.Component {
@@ -14,6 +14,7 @@ export default class Player extends React.Component {
     this.onPause = this.onEvent.bind(this, PAUSE);
     this.onSeeking = this.onEvent.bind(this, SEEKING);
     this.onSeeked = this.onEvent.bind(this, SEEKED);
+    this.onVolumeChange = this.onVolumeChange.bind(this);
   }
 
   getChildContext() {
@@ -33,6 +34,16 @@ export default class Player extends React.Component {
       }));
   }
 
+  onVolumeChange(event) {
+    event.persist();
+    this.setState((state) =>
+      stateReducer(state, {
+        type: VOLUME_CHANGED,
+        volume: event.target.volume,
+        muted: event.target.muted
+      }));
+  }
+
   render() {
     return (
       <ControlledPlayer
@@ -44,6 +55,7 @@ export default class Player extends React.Component {
         onSeeking={this.onSeeking}
         onSeeked={this.onSeeked}
         onEnded={this.onPause}
+        onVolumeChange={this.onVolumeChange}
       />
     );
   }

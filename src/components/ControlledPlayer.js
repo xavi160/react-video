@@ -36,6 +36,7 @@ export default class ControlledPlayer extends React.Component {
           onEnded={this.props.onEnded}
           onTimeUpdate={this.props.onTimeUpdate}
           onSeeked={this.props.onSeeked}
+          onVolumeChange={this.props.onVolumeChange}
         />
       </div>
     );
@@ -51,7 +52,8 @@ ControlledPlayer.propTypes = {
   onPause: React.PropTypes.func,
   onEnded: React.PropTypes.func,
   onTimeUpdate: React.PropTypes.func,
-  onSeeked: React.PropTypes.func
+  onSeeked: React.PropTypes.func,
+  onVolumeChange: React.PropTypes.func
 };
 
 ControlledPlayer.childContextTypes = { tech: React.PropTypes.object };
