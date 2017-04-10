@@ -1,5 +1,5 @@
 import React from 'react';
-import HTML5VideoTech from './HTML5VideoTech';
+import HTML5VideoTech from './tech/HTML5VideoTech';
 
 export default class ControlledPlayer extends React.Component {
 

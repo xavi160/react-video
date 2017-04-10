@@ -1,5 +1,5 @@
 import React from 'react';
-import HTML5Tech from '../techs/html5';
+import HTML5MediaInterface from './HTML5MediaInterface';
 
 export default class HTML5VideoTech extends React.Component {
   constructor(props, context) {
@@ -33,7 +33,7 @@ export default class HTML5VideoTech extends React.Component {
   }
 
   createTech(ref) {
-    this.tech = new HTML5Tech(ref);
+    this.tech = new HTML5MediaInterface(ref);
   }
 
   render() {

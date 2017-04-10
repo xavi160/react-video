@@ -1,4 +1,4 @@
-export default class HTML5VideoTech {
+export default class HTML5MediaInterface {
   constructor(el) {
     this.el = el;
   }
